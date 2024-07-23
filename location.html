@@ -1,0 +1,33 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+       // Function to fetch weather report
+async function report(x, y) {
+  const res = await fetch(`http://api.weatherapi.com/v1/forecast.json?key=6a58da3583ce4e819b592550241107&q=${x},${y}&days=1&aqi=yes&alerts=yes`);
+  return await res.json();
+}
+
+// Function to handle successful location retrieval
+async function gotLocation(position) {
+  const lat = position.coords.latitude;
+  const long = position.coords.longitude;
+  console.log(position);
+  console.log(await report(lat, long));
+}
+
+// Function to handle location retrieval failure
+function failedLocation() {
+  console.log("There is some location issue.");
+}
+
+// Request the user's location
+navigator.geolocation.getCurrentPosition(gotLocation, failedLocation);
+
+    </script>
+</body>
+</html>
